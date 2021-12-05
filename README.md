@@ -49,16 +49,16 @@ const BASE_URL = '#';
 const PaginationEntry = ({ value, isCurrent = false }) => {
     if (value == '…') {
         return (
-			<li data-pagination-ellipsis><span>…</span></li>
-		);
+            <li data-pagination-ellipsis><span>…</span></li>
+        );
     }
-	
-	if (isCurrent) {
-		return (
-			<li data-pagination-current><span>{value}</span></li>
-		);
-	}
-	
+
+    if (isCurrent) {
+        return (
+            <li data-pagination-current><span>{value}</span></li>
+        );
+    }
+
     return (
         <li>
             <a href={`${BASE_URL}/page/${value}`} title={`Go to page ${value}`}>{value}</a>
@@ -69,23 +69,23 @@ const PaginationEntry = ({ value, isCurrent = false }) => {
 const Pagination = ({ curr, max }) => {
     const sequence = generate(curr, max);
 
-	// @TODO: Conditionally make the first/prev/next/last links active or inactive, but you get the idea …
+    // @TODO: Conditionally make the first/prev/next/last links active or inactive, but you get the idea …
     return (
-		<ul className="pagination">
-			<li data-pagination-first><a href={`${BASE_URL}/page/${1}`} title="First Page">&laquo;</a></li>
-			<li data-pagination-prev><a href={`${BASE_URL}/page/${curr-1}`} title="Previous Page">&lsaquo;</a></li>
-        	{sequence.map(number =>
-				<PaginationEntry key={number} value={number} isCurrent={number == curr} />
-			)}
-			<li data-pagination-next><a href={`${BASE_URL}/page/${curr+1}`} title="Next Page">&rsaquo;</a></li>
-			<li data-pagination-last><a href={`${BASE_URL}/page/${max}`} title="Last Page">&raquo;</a></li>
-	    </ul>
-	);
+        <ul className="pagination">
+            <li data-pagination-first><a href={`${BASE_URL}/page/${1}`} title="First Page">&laquo;</a></li>
+            <li data-pagination-prev><a href={`${BASE_URL}/page/${curr-1}`} title="Previous Page">&lsaquo;</a></li>
+            {sequence.map(number =>
+                <PaginationEntry key={number} value={number} isCurrent={number == curr} />
+            )}
+            <li data-pagination-next><a href={`${BASE_URL}/page/${curr+1}`} title="Next Page">&rsaquo;</a></li>
+            <li data-pagination-last><a href={`${BASE_URL}/page/${max}`} title="Last Page">&raquo;</a></li>
+        </ul>
+    );
 }
 
 ReactDOM.render(
-  <Pagination curr="25" max="50" />,
-  document.getElementById('root')
+    <Pagination curr="25" max="50" />,
+    document.getElementById('root')
 );
 ```
 ## License
