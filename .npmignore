@@ -1,0 +1,6 @@
+tests
+src
+.editorconfig
+.prettierrc
+.gitignore
+package-lock.json

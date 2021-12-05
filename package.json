@@ -1,0 +1,38 @@
+{
+  "name": "@bramus/pagination-sequence",
+  "version": "1.0.0",
+  "description": "Pagination Sequence Generator",
+  "type": "module",
+  "source": "src/index.js",
+  "module": "dist/index.js",
+  "scripts": {
+    "build": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bramus/js-pagination-sequence.git"
+  },
+  "keywords": [
+    "pagination",
+    "sequence"
+  ],
+  "author": {
+    "name": "Bramus Van Damme",
+    "email": "bramus@bram.us",
+    "twitter": "@bramus",
+    "web": "https://www.bram.us/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bramus/js-pagination-sequence/issues"
+  },
+  "homepage": "https://github.com/bramus/js-pagination-sequence#readme",
+  "devDependencies": {
+    "esbuild": "^0.14"
+  },
+  "dependencies": {
+    "@bramus/range": "^1.0.1"
+  }
+}
