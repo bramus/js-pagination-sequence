@@ -20,57 +20,106 @@ const prettyFormat = (activeValue) => {
     }
 }
 
-console.log(generate(1, 11).map(prettyFormat(1)).join('-'));
-console.log(generate(2, 11).map(prettyFormat(2)).join('-'));
-console.log(generate(3, 11).map(prettyFormat(3)).join('-'));
-console.log(generate(4, 11).map(prettyFormat(4)).join('-'));
-console.log(generate(5, 11).map(prettyFormat(5)).join('-'));
-console.log(generate(10, 11).map(prettyFormat(10)).join('-'));
+const runExample = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesAroundCurrent = 2, glue = '…') => {
+    console.log(generate(curPage, numPages, numberOfPagesAtEdges, numberOfPagesAroundCurrent, glue).map(prettyFormat(curPage)).join('-'));
+}
+
+runExample(1, 11);
+runExample(2, 11);
+runExample(3, 11);
+runExample(4, 11);
+runExample(5, 11);
+runExample(6, 11);
+runExample(7, 11);
+runExample(8, 11);
+runExample(9, 11);
+runExample(10, 11);
+runExample(11, 11);
 console.log('');
 
-console.log(generate(1, 11, 1).map(prettyFormat(1)).join('-'));
-console.log(generate(2, 11, 1).map(prettyFormat(2)).join('-'));
-console.log(generate(3, 11, 1).map(prettyFormat(3)).join('-'));
-console.log(generate(4, 11, 1).map(prettyFormat(4)).join('-'));
-console.log(generate(5, 11, 1).map(prettyFormat(5)).join('-'));
-console.log(generate(10, 11, 1).map(prettyFormat(10)).join('-'));
+runExample(1, 11, 1);
+runExample(2, 11, 1);
+runExample(3, 11, 1);
+runExample(4, 11, 1);
+runExample(5, 11, 1);
+runExample(6, 11, 1);
+runExample(7, 11, 1);
+runExample(8, 11, 1);
+runExample(9, 11, 1);
+runExample(10, 11, 1);
+runExample(11, 11, 1);
 console.log('');
 
-console.log(generate(1, 11, 1, 1).map(prettyFormat(1)).join('-'));
-console.log(generate(2, 11, 1, 1).map(prettyFormat(2)).join('-'));
-console.log(generate(3, 11, 1, 1).map(prettyFormat(3)).join('-'));
-console.log(generate(4, 11, 1, 1).map(prettyFormat(4)).join('-'));
-console.log(generate(5, 11, 1, 1).map(prettyFormat(5)).join('-'));
-console.log(generate(10, 11, 1, 1).map(prettyFormat(10)).join('-'));
+runExample(1, 11, 1, 1);
+runExample(2, 11, 1, 1);
+runExample(3, 11, 1, 1);
+runExample(4, 11, 1, 1);
+runExample(5, 11, 1, 1);
+runExample(6, 11, 1, 1);
+runExample(7, 11, 1, 1);
+runExample(8, 11, 1, 1);
+runExample(9, 11, 1, 1);
+runExample(10, 11, 1, 1);
+runExample(11, 11, 1, 1);
 console.log('');
 
-console.log(generate(1, 11, 2, 1).map(prettyFormat(1)).join('-'));
-console.log(generate(2, 11, 2, 1).map(prettyFormat(2)).join('-'));
-console.log(generate(3, 11, 2, 1).map(prettyFormat(3)).join('-'));
-console.log(generate(5, 11, 2, 1).map(prettyFormat(5)).join('-'));
-console.log(generate(10, 11, 2, 1).map(prettyFormat(10)).join('-'));
+runExample(1, 11, 1);
+runExample(2, 11, 1);
+runExample(3, 11, 1);
+runExample(4, 11, 1);
+runExample(5, 11, 1);
+runExample(10, 11, 1);
 console.log('');
 
-console.log(generate(1, 12).map(prettyFormat(1)).join('-'));
-console.log(generate(5, 12).map(prettyFormat(5)).join('-'));
-console.log(generate(10, 12).map(prettyFormat(10)).join('-'));
+runExample(1, 11, 1, 1);
+runExample(2, 11, 1, 1);
+runExample(3, 11, 1, 1);
+runExample(4, 11, 1, 1);
+runExample(5, 11, 1, 1);
+runExample(10, 11, 1, 1);
 console.log('');
 
-console.log(generate(1, 74).map(prettyFormat(1)).join('-'));
-console.log(generate(2, 74).map(prettyFormat(2)).join('-'));
-console.log(generate(3, 74).map(prettyFormat(3)).join('-'));
-console.log(generate(4, 74).map(prettyFormat(4)).join('-'));
-console.log(generate(5, 74).map(prettyFormat(5)).join('-'));
-console.log(generate(6, 74).map(prettyFormat(6)).join('-'));
-console.log(generate(7, 74).map(prettyFormat(7)).join('-'));
-console.log(generate(8, 74).map(prettyFormat(8)).join('-'));
-console.log(generate(9, 74).map(prettyFormat(9)).join('-'));
+runExample(1, 12, 1, 1);
+runExample(2, 12, 1, 1);
+runExample(3, 12, 1, 1);
+runExample(4, 12, 1, 1);
+runExample(5, 12, 1, 1);
+runExample(6, 12, 1, 1);
+runExample(7, 12, 1, 1);
+runExample(8, 12, 1, 1);
+runExample(9, 12, 1, 1);
+runExample(10, 12, 1, 1);
+runExample(11, 12, 1, 1);
+runExample(12, 12, 1, 1);
+console.log('');
+
+runExample(1, 11, 2, 1);
+runExample(2, 11, 2, 1);
+runExample(3, 11, 2, 1);
+runExample(5, 11, 2, 1);
+runExample(10, 11, 2, 1);
+console.log('');
+
+runExample(1, 12);
+runExample(5, 12);
+runExample(10, 12);
+console.log('');
+
+runExample(1, 74);
+runExample(2, 74);
+runExample(3, 74);
+runExample(4, 74);
+runExample(5, 74);
+runExample(6, 74);
+runExample(7, 74);
+runExample(8, 74);
+runExample(9, 74);
 console.log('…');
-console.log(generate(67, 74).map(prettyFormat(67)).join('-'));
-console.log(generate(68, 74).map(prettyFormat(68)).join('-'));
-console.log(generate(69, 74).map(prettyFormat(69)).join('-'));
-console.log(generate(70, 74).map(prettyFormat(70)).join('-'));
-console.log(generate(71, 74).map(prettyFormat(71)).join('-'));
-console.log(generate(72, 74).map(prettyFormat(72)).join('-'));
-console.log(generate(73, 74).map(prettyFormat(73)).join('-'));
-console.log(generate(74, 74).map(prettyFormat(74)).join('-'));
+runExample(67, 74);
+runExample(68, 74);
+runExample(69, 74);
+runExample(70, 74);
+runExample(71, 74);
+runExample(72, 74);
+runExample(73, 74);
+runExample(74, 74);
