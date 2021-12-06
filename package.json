@@ -1,6 +1,6 @@
 {
   "name": "@bramus/pagination-sequence",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate a sequence of numbers for use in a Pagination Component, the clever way.",
   "type": "module",
   "source": "src/index.js",
