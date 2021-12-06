@@ -12,7 +12,7 @@ npm i @bramus/pagination-sequence
 
 ## Usage / Example
 
-This library contains an algorithm to generate an array of pagination entries. 
+This library comes as an ES Module and exposes a function/algorithm to generate an array of pagination entries.
 
 ```js
 import { generate } from '@bramus/pagination-sequence';
@@ -21,9 +21,9 @@ const sequence = generate(67, 74);
 // ~> [1, 2, '…', 65, 66, 67, 68, 69, '…', 73, 74]
 ```
 
-The generated array is not rendered in any way but, instead, must be fed into your own Pagination Component for rendering.
+Note that this is a Framework Agnostic library: the generated array is not rendered in any way but, instead, must be fed into your own Pagination Component for rendering.
 
-💡 Looking for some Pagination Component inspiration? See [Integration Examples](#integration-examples) below to see how to use this with your Favorite JavaScript Framework Du Jour™.
+💡 Looking for some Pagination Component inspiration? See [Integration Examples](#integration-examples) below to see how to use this with the JavaScript Framework Du Jour™.
 
 ## API
 
