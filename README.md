@@ -45,11 +45,11 @@ Parameters:
 
 The algorithm is opinionated and follows these principles:
 
-- **Quantitative Stability**
+- **Stable Output**
 
   When generating a sequence, it will always generate the same amount of entries, for any `curPage` value. When viewing a page at the edge of a series, this can result in `numberOfPagesAtEdges` being ignored.
 
-  For example: Instead of having `generate(2, 12, 1, 1)` return `01-[02]-03-..-12` _(5 entries)_, it will return `01-[02]-03-04-05-..-12` _(7 entries)_. This is a deliberate choice because `01-[02]-03-04-05-..-12` contains the same amount of entries as the output for `generate(7, 12, 1, 1)`, which will also return 7 entries: `01-..-06-[07]-08-..-12`.
+  For example: Instead of having `generate(2, 12, 1, 1)` return `01-[02]-03-..-12` _(5 entries)_, it will return `01-[02]-03-04-05-..-12` _(7 entries)_. This is a deliberate choice because `generate(7, 12, 1, 1)` will also return 7 entries: `01-..-06-[07]-08-..-12`.
 
   With a stable amount of entries being generated, the output will also be visually stable when rendered on screen.
 
@@ -81,7 +81,17 @@ const BASE_URL = '#';
 const PaginationEntry = ({ value, onEntryClick = null, label = null, title = null, isCurrent = false, isDisabled = false, ...props }) => {
     label ??= value;
     title ??= `Go to page ${value}`;
-    onEntryClick ??= (e) => {};
+
+    const onClick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        e.target.blur();
+        
+        if (onEntryClick) {
+            onEntryClick(value);
+        }
+    }
         
     if (value == '…') {
         return (
@@ -101,7 +111,7 @@ const PaginationEntry = ({ value, onEntryClick = null, label = null, title = nul
 
     return (
         <li {...props}>
-            <a href={`${BASE_URL}/page/${value}`} title={title} onClick={onEntryClick}>{label}</a>
+            <a href={`${BASE_URL}/page/${value}`} title={title} onClick={onClick}>{label}</a>
         </li>
     );
 }
@@ -124,7 +134,7 @@ const Pagination = ({ curPage, numPages, numPagesAtEdges = 2, numPagesAroundCurr
 }
 
 ReactDOM.render(
-    <Pagination curPage="25" numPages="50" />,
+    <Pagination curPage={25} numPages={50} onEntryClick={(val) => { console.log(val)}} />,
     document.getElementById('root')
 );
 ```
