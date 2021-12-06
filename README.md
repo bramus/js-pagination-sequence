@@ -42,49 +42,59 @@ To be clear: this package will only generate an array with values that needs to 
 🔗 Try it online: [https://codepen.io/bramus/pen/NWaxNKQ](https://codepen.io/bramus/pen/NWaxNKQ)
 
 ```js
+import React from "react";
+import ReactDOM from "react-dom";
 import { generate } from "@bramus/pagination-sequence";
 
 const BASE_URL = '#';
 
-const PaginationEntry = ({ value, isCurrent = false }) => {
+const PaginationEntry = ({ value, onEntryClick = null, label = null, title = null, isCurrent = false, isDisabled = false, ...props }) => {
+    label ??= value;
+    title ??= `Go to page ${value}`;
+    onEntryClick ??= (e) => {};
+        
     if (value == '…') {
         return (
-            <li data-pagination-ellipsis><span>…</span></li>
+            <li data-pagination-ellipsis {...props}><span>{label}</span></li>
+        );
+    }
+
+    if (isDisabled) {
+        return (
+            <li data-pagination-disabled {...props}><span>{label}</span></li>
         );
     }
 
     if (isCurrent) {
-        return (
-            <li data-pagination-current><span>{value}</span></li>
-        );
+        props['data-pagination-current'] = true;
     }
 
     return (
-        <li>
-            <a href={`${BASE_URL}/page/${value}`} title={`Go to page ${value}`}>{value}</a>
+        <li {...props}>
+            <a href={`${BASE_URL}/page/${value}`} title={title} onClick={onEntryClick}>{label}</a>
         </li>
     );
 }
 
-const Pagination = ({ curr, max }) => {
-    const sequence = generate(curr, max);
+const Pagination = ({ curPage, numPages, numPagesAtEdges = 2, numPagesAroundCurrent = 2, onEntryClick = null }) => {
+    const sequence = generate(curPage, numPages, numPagesAtEdges, numPagesAroundCurrent);
+    // console.log(sequence);
 
-    // @TODO: Conditionally make the first/prev/next/last links active or inactive, but you get the idea …
     return (
         <ul className="pagination">
-            <li data-pagination-first><a href={`${BASE_URL}/page/${1}`} title="First Page">&laquo;</a></li>
-            <li data-pagination-prev><a href={`${BASE_URL}/page/${curr-1}`} title="Previous Page">&lsaquo;</a></li>
-            {sequence.map(number =>
-                <PaginationEntry key={number} value={number} isCurrent={number == curr} />
+            <PaginationEntry data-pagination-first onEntryClick={onEntryClick} value={1} title="Go to First Page" label="&laquo;" isDisabled={curPage === 1} />
+            <PaginationEntry data-pagination-prev onEntryClick={onEntryClick} value={curPage-1} title="Go to Previous Page" label="&lsaquo;" isDisabled={curPage === 1} />
+            {sequence.map((val, idx) => 
+                <PaginationEntry key={`page-${(val == '…') ? `…-${idx}` : val}`} onEntryClick={onEntryClick} value={val} isCurrent={val == curPage} />
             )}
-            <li data-pagination-next><a href={`${BASE_URL}/page/${curr+1}`} title="Next Page">&rsaquo;</a></li>
-            <li data-pagination-last><a href={`${BASE_URL}/page/${max}`} title="Last Page">&raquo;</a></li>
+            <PaginationEntry data-pagination-next onEntryClick={onEntryClick} value={curPage+1} title="Go to Next Page" label="&rsaquo;" isDisabled={curPage === numPages} />
+            <PaginationEntry data-pagination-next onEntryClick={onEntryClick} value={numPages} title="Go to Last Page" label="&raquo;" isDisabled={curPage === numPages} />
         </ul>
     );
 }
 
 ReactDOM.render(
-    <Pagination curr="25" max="50" />,
+    <Pagination curPage="25" numPages="50" />,
     document.getElementById('root')
 );
 ```
