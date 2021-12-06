@@ -1,6 +1,8 @@
+![JavaScript Pagination Sequence Generator](./screenshots/js-pagination-sequence.png)
+
 # JavaScript Pagination Sequence Generator
 
-Generate a sequence of numbers for use in a pagination system, the clever way.
+Generate a sequence of numbers for use in a Pagination Component, the clever way.
 
 ## Installation
 
@@ -10,12 +12,18 @@ npm i @bramus/pagination-sequence
 
 ## Usage / Example
 
+This library contains an algorithm to generate an array of pagination entries. 
+
 ```js
 import { generate } from '@bramus/pagination-sequence';
 
-// [1, 2, '…', 65, 66, 67, 68, 69, '…', 73, 74]
 const sequence = generate(67, 74);
+// ~> [1, 2, '…', 65, 66, 67, 68, 69, '…', 73, 74]
 ```
+
+The generated array is not rendered in any way but, instead, must be fed into your own Pagination Component for rendering.
+
+💡 Looking for some Pagination Component inspiration? See [Integration Examples](#integration-examples) below to see how to use this with your Favorite JavaScript Framework Du Jour™.
 
 ## API
 
@@ -33,15 +41,37 @@ Parameters:
 - `numberOfPagesAroundCurrent` _(default: 2)_: Number of pages to show around the active page.
 - `glue` _(default: '…')_: The string to show when there's a gap
 
-## Limitations
+## Principles
 
-To be clear: this package will only generate an array with values that needs to be shown. You will need to process the array yourself for use within your the JavaScript Framework Du Jour™, as demonstrated in the Integration Example below. You might consider this a limitation.
+The algorithm is opinionated and follows these principles:
 
-## Integration Example (React)
+- **Quantitative Stability**
+
+  When generating a sequence, it will always generate the same amount of entries, for any `curPage` value. When viewing a page at the edge of a series, this can result in `numberOfPagesAtEdges` being ignored.
+
+  For example: Instead of having `generate(2, 12, 1, 1)` return `01-[02]-03-..-12` _(5 entries)_, it will return `01-[02]-03-04-05-..-12` _(7 entries)_. This is a deliberate choice because `01-[02]-03-04-05-..-12` contains the same amount of entries as the output for `generate(7, 12, 1, 1)`, which will also return 7 entries: `01-..-06-[07]-08-..-12`.
+
+  With a stable amount of entries being generated, the output will also be visually stable when rendered on screen.
+
+- **Always include links to the edges**
+
+  The algorithm will always include links to the first and last page.
+
+  For Example: when looking at page 25 of 50, the algorithm will include a link to page 1 and page 50.
+
+- **No unnecessary gaps**
+
+  When the algorithm detects a gap that's only “1 item wide”, it will replace that gap with the actual number.
+
+  For Example: A foolish take on `generate(4, 9, 1, 1)`, would generate `01-..-03-[04]-05-..-09`. The algorithm corrects the first gap to `02` and will return `01-02-03-[04]-05-..-09` instead.
+
+## Integration Examples
+
+### React
 
 🔗 Try it online: [https://codepen.io/bramus/pen/NWaxNKQ](https://codepen.io/bramus/pen/NWaxNKQ)
 
-```js
+```jsx
 import React from "react";
 import ReactDOM from "react-dom";
 import { generate } from "@bramus/pagination-sequence";
@@ -101,3 +131,10 @@ ReactDOM.render(
 ## License
 
 `@bramus/pagination-sequence` is released under the MIT public license. See the enclosed `LICENSE` for details.
+
+## Other Language Implementations
+
+Looking for an implementation in another programming language?
+
+- PHP: [https://gist.github.com/bramus/5d8f2e0269e57dff5136](https://gist.github.com/bramus/5d8f2e0269e57dff5136) _(The original, from 2014)_
+- _(submit a PR to add your own)_
