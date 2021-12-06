@@ -78,7 +78,7 @@ const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesArou
         // Don't generate a Center Piece, but extend the left part as
         // the left part would otherwise overlap the center piece.
         if (reworkedCurPage < (numItemsInSequence/2)) {
-            sequence.leftEdge = range(1, Math.floor(numItemsInSequence/2) + numberOfPagesAroundCurrent - 1);
+            sequence.leftEdge = range(1, Math.ceil(numItemsInSequence/2) + numberOfPagesAroundCurrent);
             sequence.centerPiece = [glue];
             if (numberOfPagesAtEdges > 0) sequence.rightEdge = range(numPages-(numberOfPagesAtEdges-1), numPages);
         }
