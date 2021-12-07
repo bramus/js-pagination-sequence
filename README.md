@@ -30,15 +30,15 @@ Note that this is a Framework Agnostic library: the generated array is not rende
 The exposed function has the following API:
 
 ```js
-generate(curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesAroundCurrent = 2, glue = '…');
+generate(curPage, numPages, numPagesAtEdges = 2, numPagesAroundCurrent = 2, glue = '…');
 ```
 
 Parameters:
 
 - `curPage`: The current active page
 - `numPages`: The total number of pages
-- `numberOfPagesAtEdges` _(default: 2)_: Number of pages to show on the outer edges.
-- `numberOfPagesAroundCurrent` _(default: 2)_: Number of pages to show around the active page.
+- `numPagesAtEdges` _(default: 2)_: Number of pages to show on the outer edges.
+- `numPagesAroundCurrent` _(default: 2)_: Number of pages to show around the active page.
 - `glue` _(default: '…')_: The string to show when there's a gap
 
 ## Principles
@@ -47,7 +47,7 @@ The algorithm is opinionated and follows these principles:
 
 - **Stable Output**
 
-  When generating a sequence, it will always generate the same amount of entries, for any `curPage` value. When viewing a page at the edge of a series, this can result in `numberOfPagesAtEdges` being ignored.
+  When generating a sequence, it will always generate the same amount of entries, for any `curPage` value. When viewing a page at the edge of a series, this can result in `numPagesAtEdges` being ignored.
 
   For example: Instead of having `generate(2, 12, 1, 1)` return `01-[02]-03-..-12` _(5 entries)_, it will return `01-[02]-03-04-05-..-12` _(7 entries)_. This is a deliberate choice because `generate(7, 12, 1, 1)` will also return 7 entries: `01-..-06-[07]-08-..-12`.
 

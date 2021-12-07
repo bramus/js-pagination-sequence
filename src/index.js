@@ -30,7 +30,7 @@ import { range } from `@bramus/range`;
  * 01-02-..-67-68-69-70-71-72-73-[74]
  *
  */
-const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesAroundCurrent = 2, glue = '…') => {
+const generate = (curPage, numPages, numPagesAtEdges = 2, numPagesAroundCurrent = 2, glue = '…') => {
 
     // Define the number of items we would generate in a normal scenario
     // (viz. lots of pages, current page in the middle):
@@ -43,7 +43,7 @@ const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesArou
     // The goal is to enforce all sequences generated to have this amount
     // of items. By default this magic number would be 11, as seen/counted
     // in this sequence: 1-02-..-11-12-[13]-14-15-..-88-74
-    const numItemsInSequence = 1 + (numberOfPagesAroundCurrent * 2) + (numberOfPagesAtEdges * 2) + 2;
+    const numItemsInSequence = 1 + (numPagesAroundCurrent * 2) + (numPagesAtEdges * 2) + 2;
 
     // curPage cannot be greater than numPages.
     const reworkedCurPage = Math.min(curPage, numPages);
@@ -62,7 +62,7 @@ const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesArou
 
         // If we have no forced amount of items on the edges, then the
         // sequence must start from the current page number instead of 1
-        const start = (numberOfPagesAtEdges > 0) ? 1 : reworkedCurPage;
+        const start = (numPagesAtEdges > 0) ? 1 : reworkedCurPage;
 
         // Parts of the sequence we'll be generating
         const sequence = {
@@ -78,9 +78,9 @@ const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesArou
         // Don't generate a Center Piece, but extend the left part as
         // the left part would otherwise overlap the center piece.
         if (reworkedCurPage < (numItemsInSequence/2)) {
-            sequence.leftEdge = range(1, Math.ceil(numItemsInSequence/2) + numberOfPagesAroundCurrent);
+            sequence.leftEdge = range(1, Math.ceil(numItemsInSequence/2) + numPagesAroundCurrent);
             sequence.centerPiece = [glue];
-            if (numberOfPagesAtEdges > 0) sequence.rightEdge = range(numPages-(numberOfPagesAtEdges-1), numPages);
+            if (numPagesAtEdges > 0) sequence.rightEdge = range(numPages-(numPagesAtEdges-1), numPages);
         }
 
         // If the current page is nearby the right edge (viz. curPage is
@@ -88,9 +88,9 @@ const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesArou
         // Don't generate a center piece but extend the right part as
         // the right part would otherwise overlap the center piece.
         else if (reworkedCurPage > numPages - (numItemsInSequence/2)) {
-            if (numberOfPagesAtEdges > 0) sequence.leftEdge = range(start, numberOfPagesAtEdges);
+            if (numPagesAtEdges > 0) sequence.leftEdge = range(start, numPagesAtEdges);
             sequence.centerPiece = [glue];
-            sequence.rightEdge = range(Math.min(numPages - Math.floor(numItemsInSequence/2) - numberOfPagesAroundCurrent, reworkedCurPage - numberOfPagesAroundCurrent), numPages);
+            sequence.rightEdge = range(Math.min(numPages - Math.floor(numItemsInSequence/2) - numPagesAroundCurrent, reworkedCurPage - numPagesAroundCurrent), numPages);
         }
 
         // The current page falls somewhere in the middle:
@@ -98,16 +98,16 @@ const generate = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesArou
         else {
 
             // Center Piece
-            sequence.centerPiece = range(reworkedCurPage - numberOfPagesAroundCurrent, reworkedCurPage + numberOfPagesAroundCurrent);
+            sequence.centerPiece = range(reworkedCurPage - numPagesAroundCurrent, reworkedCurPage + numPagesAroundCurrent);
 
             // Left/Right Edges (only if we requested)
-            if (numberOfPagesAtEdges > 0) sequence.leftEdge = range(start,numberOfPagesAtEdges);
-            if (numberOfPagesAtEdges > 0) sequence.rightEdge = range(numPages-(numberOfPagesAtEdges-1), numPages);
+            if (numPagesAtEdges > 0) sequence.leftEdge = range(start,numPagesAtEdges);
+            if (numPagesAtEdges > 0) sequence.rightEdge = range(numPages-(numPagesAtEdges-1), numPages);
 
             // The glue we'll use to stick left, center, and right together
             // Special case: If the gap between left and center is only one
             // unit, don't add '...' but add that number instead
-            sequence.glueLeftCenter = (sequence.centerPiece[0] == (numberOfPagesAtEdges+2)) ? [numberOfPagesAtEdges+1] : [glue];
+            sequence.glueLeftCenter = (sequence.centerPiece[0] == (numPagesAtEdges+2)) ? [numPagesAtEdges+1] : [glue];
             sequence.glueCenterRight = [glue];
 
         }
