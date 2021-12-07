@@ -1,4 +1,4 @@
-![JavaScript Pagination Sequence Generator](./screenshots/js-pagination-sequence.png)
+[![JavaScript Pagination Sequence Generator](./screenshots/js-pagination-sequence.png)](https://codepen.io/bramus/pen/NWaxNKQ)
 
 # JavaScript Pagination Sequence Generator
 
