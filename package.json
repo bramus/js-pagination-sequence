@@ -5,6 +5,7 @@
   "type": "module",
   "source": "src/index.js",
   "module": "dist/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
     "dev": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --watch",
