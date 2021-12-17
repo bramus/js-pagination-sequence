@@ -1,4 +1,4 @@
-import { range } from `@bramus/range`;
+import { range } from '@bramus/range';
 
 /**
  * Generate a sequence of numbers for use in a pagination system, the clever way.
