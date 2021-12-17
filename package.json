@@ -10,7 +10,8 @@
     "build": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
     "dev": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --watch",
     "prepublish": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run build",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -32,7 +33,8 @@
   },
   "homepage": "https://github.com/bramus/js-pagination-sequence#readme",
   "devDependencies": {
-    "esbuild": "^0.14"
+    "esbuild": "^0.14",
+    "mocha": "^9.1.3"
   },
   "dependencies": {
     "@bramus/range": "^1.0.1"

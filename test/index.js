@@ -1,8 +1,9 @@
+import { equal, deepEqual } from 'assert';
 import { generate } from '../dist/index.js';
 
 const addLeadingZeros = (value, targetLength) => {
     return value.toString().padStart(targetLength, '0');
-}
+};
 
 const prettyFormat = (activeValue) => {
     return (value) => {
@@ -17,109 +18,106 @@ const prettyFormat = (activeValue) => {
         }
 
         return formatted;
-    }
-}
+    };
+};
 
 const runExample = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesAroundCurrent = 2, glue = '…') => {
-    console.log(generate(curPage, numPages, numberOfPagesAtEdges, numberOfPagesAroundCurrent, glue).map(prettyFormat(curPage)).join('-'));
-}
+    return generate(curPage, numPages, numberOfPagesAtEdges, numberOfPagesAroundCurrent, glue).map(prettyFormat(curPage)).join('-');
+};
 
-runExample(1, 11);
-runExample(2, 11);
-runExample(3, 11);
-runExample(4, 11);
-runExample(5, 11);
-runExample(6, 11);
-runExample(7, 11);
-runExample(8, 11);
-runExample(9, 11);
-runExample(10, 11);
-runExample(11, 11);
-console.log('');
+describe('basic series', () => {
+    it('it should work', () => {
+        equal(runExample(1, 11), '[01]-02-03-04-05-06-07-08-09-10-11');
+        equal(runExample(2, 11), '01-[02]-03-04-05-06-07-08-09-10-11');
+        equal(runExample(3, 11), '01-02-[03]-04-05-06-07-08-09-10-11');
+        equal(runExample(4, 11), '01-02-03-[04]-05-06-07-08-09-10-11');
+        equal(runExample(5, 11), '01-02-03-04-[05]-06-07-08-09-10-11');
+        equal(runExample(6, 11), '01-02-03-04-05-[06]-07-08-09-10-11');
+        equal(runExample(7, 11), '01-02-03-04-05-06-[07]-08-09-10-11');
+        equal(runExample(8, 11), '01-02-03-04-05-06-07-[08]-09-10-11');
+        equal(runExample(9, 11), '01-02-03-04-05-06-07-08-[09]-10-11');
+        equal(runExample(10, 11), '01-02-03-04-05-06-07-08-09-[10]-11');
+        equal(runExample(11, 11), '01-02-03-04-05-06-07-08-09-10-[11]');
+    });
 
-runExample(1, 11, 1);
-runExample(2, 11, 1);
-runExample(3, 11, 1);
-runExample(4, 11, 1);
-runExample(5, 11, 1);
-runExample(6, 11, 1);
-runExample(7, 11, 1);
-runExample(8, 11, 1);
-runExample(9, 11, 1);
-runExample(10, 11, 1);
-runExample(11, 11, 1);
-console.log('');
+    it('it should work with adjusted numberOfPagesAtEdges', () => {
+        equal(runExample(1, 11, 1), '[01]-02-03-04-05-06-07-..-11');
+        equal(runExample(2, 11, 1), '01-[02]-03-04-05-06-07-..-11');
+        equal(runExample(3, 11, 1), '01-02-[03]-04-05-06-07-..-11');
+        equal(runExample(4, 11, 1), '01-02-03-[04]-05-06-07-..-11');
+        equal(runExample(5, 11, 1), '01-02-03-04-[05]-06-07-..-11');
+        equal(runExample(6, 11, 1), '01-..-04-05-[06]-07-08-..-11');
+        equal(runExample(7, 11, 1), '01-..-05-06-[07]-08-09-10-11');
+        equal(runExample(8, 11, 1), '01-..-05-06-07-[08]-09-10-11');
+        equal(runExample(9, 11, 1), '01-..-05-06-07-08-[09]-10-11');
+        equal(runExample(10, 11, 1), '01-..-05-06-07-08-09-[10]-11');
+        equal(runExample(11, 11, 1), '01-..-05-06-07-08-09-10-[11]');
+    });
 
-runExample(1, 11, 1, 1);
-runExample(2, 11, 1, 1);
-runExample(3, 11, 1, 1);
-runExample(4, 11, 1, 1);
-runExample(5, 11, 1, 1);
-runExample(6, 11, 1, 1);
-runExample(7, 11, 1, 1);
-runExample(8, 11, 1, 1);
-runExample(9, 11, 1, 1);
-runExample(10, 11, 1, 1);
-runExample(11, 11, 1, 1);
-console.log('');
+    it('it should work with adjusted numberOfPagesAtEdges and numberOfPagesAroundCurrent', () => {
+        equal(runExample(1, 11, 1, 1), '[01]-02-03-04-05-..-11');
+        equal(runExample(2, 11, 1, 1), '01-[02]-03-04-05-..-11');
+        equal(runExample(3, 11, 1, 1), '01-02-[03]-04-05-..-11');
+        equal(runExample(4, 11, 1, 1), '01-02-03-[04]-05-..-11');
+        equal(runExample(5, 11, 1, 1), '01-..-04-[05]-06-..-11');
+        equal(runExample(6, 11, 1, 1), '01-..-05-[06]-07-..-11');
+        equal(runExample(7, 11, 1, 1), '01-..-06-[07]-08-..-11');
+        equal(runExample(8, 11, 1, 1), '01-..-07-[08]-09-10-11');
+        equal(runExample(9, 11, 1, 1), '01-..-07-08-[09]-10-11');
+        equal(runExample(10, 11, 1, 1), '01-..-07-08-09-[10]-11');
+        equal(runExample(11, 11, 1, 1), '01-..-07-08-09-10-[11]');
+    });
+});
 
-runExample(1, 11, 1);
-runExample(2, 11, 1);
-runExample(3, 11, 1);
-runExample(4, 11, 1);
-runExample(5, 11, 1);
-runExample(10, 11, 1);
-console.log('');
+describe('larger series', () => {
+    it('it should work', () => {
+        equal(runExample(1, 12), '[01]-02-03-04-05-06-07-08-..-11-12');
+        equal(runExample(5, 12), '01-02-03-04-[05]-06-07-08-..-11-12');
+        equal(runExample(10, 12), '01-02-..-05-06-07-08-09-[10]-11-12');
+    });
 
-runExample(1, 11, 1, 1);
-runExample(2, 11, 1, 1);
-runExample(3, 11, 1, 1);
-runExample(4, 11, 1, 1);
-runExample(5, 11, 1, 1);
-runExample(10, 11, 1, 1);
-console.log('');
+    it('it should work with adjusted numberOfPagesAroundCurrent', () => {
+        equal(runExample(1, 11, 2, 1), '[01]-02-03-04-05-06-..-10-11');
+        equal(runExample(2, 11, 2, 1), '01-[02]-03-04-05-06-..-10-11');
+        equal(runExample(3, 11, 2, 1), '01-02-[03]-04-05-06-..-10-11');
+        equal(runExample(5, 11, 2, 1), '01-02-03-04-[05]-06-..-10-11');
+        equal(runExample(10, 11, 2, 1), '01-02-..-06-07-08-09-[10]-11');
+    });
 
-runExample(1, 12, 1, 1);
-runExample(2, 12, 1, 1);
-runExample(3, 12, 1, 1);
-runExample(4, 12, 1, 1);
-runExample(5, 12, 1, 1);
-runExample(6, 12, 1, 1);
-runExample(7, 12, 1, 1);
-runExample(8, 12, 1, 1);
-runExample(9, 12, 1, 1);
-runExample(10, 12, 1, 1);
-runExample(11, 12, 1, 1);
-runExample(12, 12, 1, 1);
-console.log('');
+    it('it should work with adjusted numberOfPagesAtEdges and numberOfPagesAroundCurrent', () => {
+        equal(runExample(1, 12, 1, 1), '[01]-02-03-04-05-..-12');
+        equal(runExample(2, 12, 1, 1), '01-[02]-03-04-05-..-12');
+        equal(runExample(3, 12, 1, 1), '01-02-[03]-04-05-..-12');
+        equal(runExample(4, 12, 1, 1), '01-02-03-[04]-05-..-12');
+        equal(runExample(5, 12, 1, 1), '01-..-04-[05]-06-..-12');
+        equal(runExample(6, 12, 1, 1), '01-..-05-[06]-07-..-12');
+        equal(runExample(7, 12, 1, 1), '01-..-06-[07]-08-..-12');
+        equal(runExample(8, 12, 1, 1), '01-..-07-[08]-09-..-12');
+        equal(runExample(9, 12, 1, 1), '01-..-08-[09]-10-11-12');
+        equal(runExample(10, 12, 1, 1), '01-..-08-09-[10]-11-12');
+        equal(runExample(11, 12, 1, 1), '01-..-08-09-10-[11]-12');
+        equal(runExample(12, 12, 1, 1), '01-..-08-09-10-11-[12]');
+    });
+});
 
-runExample(1, 11, 2, 1);
-runExample(2, 11, 2, 1);
-runExample(3, 11, 2, 1);
-runExample(5, 11, 2, 1);
-runExample(10, 11, 2, 1);
-console.log('');
-
-runExample(1, 12);
-runExample(5, 12);
-runExample(10, 12);
-console.log('');
-
-runExample(1, 74);
-runExample(2, 74);
-runExample(3, 74);
-runExample(4, 74);
-runExample(5, 74);
-runExample(6, 74);
-runExample(7, 74);
-runExample(8, 74);
-runExample(9, 74);
-console.log('…');
-runExample(67, 74);
-runExample(68, 74);
-runExample(69, 74);
-runExample(70, 74);
-runExample(71, 74);
-runExample(72, 74);
-runExample(73, 74);
-runExample(74, 74);
+describe('large series', () => {
+    it('it should work', () => {
+        equal(runExample(1, 74), '[01]-02-03-04-05-06-07-08-..-73-74');
+        equal(runExample(2, 74), '01-[02]-03-04-05-06-07-08-..-73-74');
+        equal(runExample(3, 74), '01-02-[03]-04-05-06-07-08-..-73-74');
+        equal(runExample(4, 74), '01-02-03-[04]-05-06-07-08-..-73-74');
+        equal(runExample(5, 74), '01-02-03-04-[05]-06-07-08-..-73-74');
+        equal(runExample(6, 74), '01-02-03-04-05-[06]-07-08-..-73-74');
+        equal(runExample(7, 74), '01-02-..-05-06-[07]-08-09-..-73-74');
+        equal(runExample(8, 74), '01-02-..-06-07-[08]-09-10-..-73-74');
+        equal(runExample(9, 74), '01-02-..-07-08-[09]-10-11-..-73-74');
+        equal(runExample(67, 74), '01-02-..-65-66-[67]-68-69-..-73-74');
+        equal(runExample(68, 74), '01-02-..-66-67-[68]-69-70-..-73-74');
+        equal(runExample(69, 74), '01-02-..-67-68-[69]-70-71-72-73-74');
+        equal(runExample(70, 74), '01-02-..-67-68-69-[70]-71-72-73-74');
+        equal(runExample(71, 74), '01-02-..-67-68-69-70-[71]-72-73-74');
+        equal(runExample(72, 74), '01-02-..-67-68-69-70-71-[72]-73-74');
+        equal(runExample(73, 74), '01-02-..-67-68-69-70-71-72-[73]-74');
+        equal(runExample(74, 74), '01-02-..-67-68-69-70-71-72-73-[74]');
+    });
+});
