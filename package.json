@@ -3,12 +3,17 @@
   "version": "1.1.1",
   "description": "Generate a sequence of numbers for use in a Pagination Component, the clever way.",
   "type": "module",
-  "source": "src/index.js",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "export": {
+    ".": "./dist/index.esm.js",
+    "import": "./dist/index.esm.js",
+    "require": "./dist/index.cjs.js"
+  },
   "scripts": {
-    "build": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --sourcemap --minify",
-    "dev": "esbuild --bundle ./src/index.js --outfile=./dist/index.js --format=esm --watch",
+    "build-esm": "esbuild --bundle ./src/index.js --outfile=./dist/index.esm.js --format=esm --sourcemap --minify",
+    "build-cjs": "esbuild --bundle ./src/index.js --outfile=./dist/index.cjs.js --format=cjs --sourcemap --minify",
+    "build": "npm run build-esm && npm run build-cjs",
     "prepublish": "npm run build",
     "pretest": "npm run build",
     "test": "mocha"
@@ -37,6 +42,6 @@
     "mocha": "^9.1.3"
   },
   "dependencies": {
-    "@bramus/range": "^1.1.1"
+    "@bramus/range": "^1.1.2"
   }
 }

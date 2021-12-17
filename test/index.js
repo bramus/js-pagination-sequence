@@ -1,5 +1,6 @@
 import { equal, deepEqual } from 'assert';
-import { generate } from '../dist/index.js';
+// import { generate } from '../src/index.js'; // 🤔 SyntaxError: The requested module '@bramus/range' does not provide an export named 'range'
+import { generate } from '../dist/index.esm.js';
 
 const addLeadingZeros = (value, targetLength) => {
     return value.toString().padStart(targetLength, '0');
