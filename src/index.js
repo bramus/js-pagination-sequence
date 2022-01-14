@@ -120,4 +120,17 @@ const generate = (curPage, numPages, numPagesAtEdges = 2, numPagesAroundCurrent 
     return finalSequence;
 };
 
-export { generate };
+const generateFromObj = (opts = {}) => {
+    console.log(opts);
+    const {
+        curPage = null,
+        numPages = null,
+        numPagesAtEdges = 2,
+        numPagesAroundCurrent = 2,
+        glue = '…',
+    } = opts;
+
+    return generate(curPage, numPages, numPagesAtEdges, numPagesAroundCurrent, glue);
+}
+
+export { generate, generateFromObj };
