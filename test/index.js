@@ -1,6 +1,6 @@
 import { equal, deepEqual } from 'assert';
 // import { generate } from '../src/index.js'; // 🤔 SyntaxError: The requested module '@bramus/range' does not provide an export named 'range'
-import { generate } from '../dist/index.esm.js';
+import { generate, generateFromObj } from '../dist/index.esm.js';
 
 const addLeadingZeros = (value, targetLength) => {
     return value.toString().padStart(targetLength, '0');
@@ -24,6 +24,10 @@ const prettyFormat = (activeValue) => {
 
 const runExample = (curPage, numPages, numberOfPagesAtEdges = 2, numberOfPagesAroundCurrent = 2, glue = '…') => {
     return generate(curPage, numPages, numberOfPagesAtEdges, numberOfPagesAroundCurrent, glue).map(prettyFormat(curPage)).join('-');
+};
+
+const runExampleWithObject = (options = {}) => {
+    return generateFromObj(options).map(prettyFormat(options.curPage ?? 1)).join('-');
 };
 
 describe('basic series', () => {
@@ -120,5 +124,14 @@ describe('large series', () => {
         equal(runExample(72, 74), '01-02-..-67-68-69-70-71-[72]-73-74');
         equal(runExample(73, 74), '01-02-..-67-68-69-70-71-72-[73]-74');
         equal(runExample(74, 74), '01-02-..-67-68-69-70-71-72-73-[74]');
+    });
+});
+
+describe('generate from object', () => {
+    it('is should return the same', () => {
+        equal(runExample(1, 1), runExampleWithObject());
+        equal(runExample(1, 1), runExampleWithObject({}));
+
+        equal(runExample(1, 74), runExampleWithObject({ curPage: 1, numPages: 74 }));
     });
 });
