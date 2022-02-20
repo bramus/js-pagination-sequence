@@ -21,13 +21,27 @@ const sequence = generate(67, 74);
 // ~> [1, 2, '…', 65, 66, 67, 68, 69, '…', 73, 74]
 ```
 
+Alternatively you can use `generateFromObj` which accepts a configuration Object as an argument:
+
+```js
+import { generateFromObj } from '@bramus/pagination-sequence';
+
+const sequence = generateFromObj({
+    curPage: 67,
+    numPages: 74,
+});
+// ~> [1, 2, '…', 65, 66, 67, 68, 69, '…', 73, 74]
+```
+
 Note that this is a Framework Agnostic library: the generated array is not rendered in any way but, instead, must be fed into your own Pagination Component for rendering.
 
 💡 Looking for some Pagination Component inspiration? See [Integration Examples](#integration-examples) below to see how to use this with the JavaScript Framework Du Jour™.
 
 ## API
 
-The exposed function has the following API:
+### `generate()`
+
+The exposed `generate` function has the following API:
 
 ```js
 generate(curPage, numPages, numPagesAtEdges = 2, numPagesAroundCurrent = 2, glue = '…');
@@ -40,6 +54,20 @@ Parameters:
 - `numPagesAtEdges` _(default: 2)_: Number of pages to show on the outer edges.
 - `numPagesAroundCurrent` _(default: 2)_: Number of pages to show around the active page.
 - `glue` _(default: '…')_: The string to show when there's a gap
+
+### `generateFromObj()`
+
+The `generateFromObj` function accepts one single `opts` object. Its members are all of the parameters described above. Default values are set where possible.
+
+```js
+const { 
+    curPage = 1,
+    numPages = 1,
+    numPagesAtEdges = 2,
+    numPagesAroundCurrent = 2,
+    glue = '…',
+} = opts;
+```
 
 ## Principles
 
